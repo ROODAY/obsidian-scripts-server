@@ -1,3 +1,5 @@
 node_modules
 *.env
 *.secret
+client_secret*.json
+secrets.json

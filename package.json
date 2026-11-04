@@ -5,7 +5,9 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "google:auth": "node scripts/google-auth.mjs",
+    "google:test": "node scripts/test-google-health.mjs"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",

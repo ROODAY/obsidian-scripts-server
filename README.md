@@ -37,7 +37,7 @@ To build and run the Docker container:
 
 2. **Run the Docker container:**
    ```
-   docker run -p 3000:3000 obsidian-scripts-server
+   docker run -p 3000:3000 --env-file .env obsidian-scripts-server
    ```
 
 The server will be accessible at `http://localhost:3000`.
@@ -51,9 +51,48 @@ ADMIN_PASSWORD=
 REDDIT_AUTH=
 REDDIT_DEVICE_ID=
 REDDIT_USER_AGENT=
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REFRESH_TOKEN=
 ```
 
-You'll also need to create `src/fitbit_refresh_token.secret` and populate it with a Fitbit API refresh token. You can use the following webpage to get one: https://dev.fitbit.com/build/reference/web-api/troubleshooting-guide/oauth2-tutorial/
+`.env` is gitignored. The downloaded OAuth client JSON (`client_secret_*.json`)
+and `secrets.json` are also ignored — do not commit either.
+
+### Google Health API credentials
+
+The sleep endpoint uses the Google Health API (the Fitbit Web API was shut
+down in November 2026), which uses Google OAuth 2.0. Copy `client_id` and
+`client_secret` from the downloaded client secret JSON into
+`GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`, then run:
+
+```
+npm run google:auth
+```
+
+Open the printed URL, sign in with the account that has a Google Health
+profile, and approve the `googlehealth.sleep.readonly` scope. You will see an
+"unverified app" warning; choose **Advanced → proceed**. Google redirects to
+`https://www.google.com/?code=...`; copy the code and run:
+
+```
+npm run google:auth -- "<code>"
+```
+
+This exchanges the code and writes `GOOGLE_REFRESH_TOKEN` into `.env` without
+printing it. The script reports whether the token is long-lived
+(`refresh_token_expires_in` absent).
+
+Verify the credentials with:
+
+```
+npm run google:test
+npm run google:test -- 2026-11-02
+```
+
+The test prints only diagnostics — token expiry, account link status, and the
+shape of each sleep data point (no tokens or health values).
 
 ## OAuth consent branding (GitHub Pages)
 
@@ -94,7 +133,6 @@ obsidian-script-server:
     - TZ=America/Los_Angeles
   volumes:
     - /home/rooday/obsidian-scripts-server/.env:/usr/src/app/.env
-    - /home/rooday/obsidian-scripts-server/src/fitbit_refresh_token.secret:/usr/src/app/src/fitbit_refresh_token.secret
   restart: always
   labels:
     - traefik.enable=true
