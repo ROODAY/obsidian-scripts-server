@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Obsidian Scripts Server</title>
+    <meta
+      name="description"
+      content="A private, single-user web service that fetches my own sleep and Reddit data for my personal Obsidian notes."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Personal application</p>
+      <h1>Obsidian Scripts Server</h1>
+      <p class="lede">
+        A small, self-hosted web service that retrieves my own health and
+        news data so it can be included in my personal Obsidian notes.
+      </p>
+
+      <div class="card">
+        <h2>What it does</h2>
+        <p>
+          The server wraps a few scripts that do not run well inside Obsidian
+          and exposes them over HTTP for my personal note templates. It runs on
+          a private server that I administer and is not offered as a public
+          service.
+        </p>
+        <dl>
+          <dt>Sleep summary</dt>
+          <dd>
+            Reads my own sleep data from Google Health (Fitbit) using the
+            read-only <code>googlehealth.sleep.readonly</code> scope, so a
+            daily note can show last night's sleep.
+          </dd>
+          <dt>Reddit headlines</dt>
+          <dd>
+            Fetches top headlines from subreddits I choose, for a personal news
+            section in my notes.
+          </dd>
+          <dt>Access</dt>
+          <dd>
+            Protected by HTTP Basic authentication and available only to me.
+          </dd>
+        </dl>
+      </div>
+
+      <div class="card">
+        <h2>Who it is for</h2>
+        <p>
+          This application has exactly one user: its developer. It is not a
+          product, has no other accounts, and does not collect information
+          about anyone else.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Contact</h2>
+        <p>
+          Questions about this application can be sent to
+          <a href="mailto:rudytheninja@gmail.com">rudytheninja@gmail.com</a>.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <nav>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="https://github.com/ROODAY/obsidian-scripts-server">Source code</a>
+      </nav>
+      <p>Last updated November 3, 2026.</p>
+    </footer>
+  </body>
+</html>

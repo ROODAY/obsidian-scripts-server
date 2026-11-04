@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy Policy — Obsidian Scripts Server</title>
+    <meta
+      name="description"
+      content="Privacy policy for Obsidian Scripts Server, a private single-user application."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <a class="back" href="index.html">← Back to home</a>
+      <h1>Privacy Policy</h1>
+      <p class="lede">
+        Obsidian Scripts Server is a private, single-user application. This
+        policy explains what it accesses and how that data is handled.
+      </p>
+
+      <div class="card">
+        <h2>Who runs this application</h2>
+        <p>
+          The application is developed and operated by one person, for their own
+          use. It is not offered to the public and does not have other users.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Data the application accesses</h2>
+        <ul>
+          <li>
+            <strong>Google Health sleep data.</strong> With the read-only
+            <code>googlehealth.sleep.readonly</code> scope, the application
+            reads the operator's own sleep sessions so it can display a sleep
+            summary in their personal notes.
+          </li>
+          <li>
+            <strong>Public Reddit headlines.</strong> The application reads
+            publicly available post titles from subreddits chosen by the
+            operator.
+          </li>
+        </ul>
+        <p>
+          The application does not access data belonging to anyone other than
+          its operator.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>How data is stored</h2>
+        <ul>
+          <li>
+            An OAuth refresh token is stored in a secret file on the operator's
+            private server so the application can request fresh access tokens.
+          </li>
+          <li>
+            Health data is fetched on demand to answer a request and is not
+            stored in a database or written to disk by this application.
+          </li>
+          <li>
+            Reddit API credentials are stored in the server's environment
+            configuration.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Sharing and tracking</h2>
+        <ul>
+          <li>No personal data is sold, rented, or shared with third parties.</li>
+          <li>No advertising, analytics, or tracking scripts are used.</li>
+          <li>The application does not set cookies for visitors to this page.</li>
+          <li>
+            Requests to third-party APIs (Google Health and Reddit) are made
+            directly from the operator's server, subject to those providers'
+            own privacy policies.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Retention and revocation</h2>
+        <p>
+          The OAuth refresh token is kept until it is revoked. Access can be
+          revoked at any time from the Google Account permissions page
+          (<a href="https://myaccount.google.com/permissions"
+            >myaccount.google.com/permissions</a
+          >). Once access is revoked, the application can no longer read health
+          data.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Contact</h2>
+        <p>
+          Questions about this policy can be sent to
+          <a href="mailto:rudytheninja@gmail.com">rudytheninja@gmail.com</a>.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="terms.html">Terms of Service</a>
+      </nav>
+      <p>Last updated November 3, 2026.</p>
+    </footer>
+  </body>
+</html>

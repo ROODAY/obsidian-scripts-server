@@ -55,6 +55,28 @@ REDDIT_USER_AGENT=
 
 You'll also need to create `src/fitbit_refresh_token.secret` and populate it with a Fitbit API refresh token. You can use the following webpage to get one: https://dev.fitbit.com/build/reference/web-api/troubleshooting-guide/oauth2-tutorial/
 
+## OAuth consent branding (GitHub Pages)
+
+The static pages in `docs/` are the home page, privacy policy, and terms of
+service used by the Google OAuth consent screen. To publish them:
+
+1. Go to **Settings → Pages** in the GitHub repository.
+2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+3. Choose branch **main** and folder **/docs**, then save.
+
+Once published, enter these values in the Google Cloud console under
+**Google Auth Platform → Branding**:
+
+| Field | Value |
+| --- | --- |
+| Application home page | `https://rooday.github.io/obsidian-scripts-server/` |
+| Application privacy policy link | `https://rooday.github.io/obsidian-scripts-server/privacy.html` |
+| Application terms of service link | `https://rooday.github.io/obsidian-scripts-server/terms.html` |
+| Authorized domains | `rooday.github.io` |
+
+Leave **App logo** empty — uploading a logo requires the app to go through
+verification.
+
 ## Docker Compose
 
 Here's an example docker compose section using Traefik as a reverse-proxy:
