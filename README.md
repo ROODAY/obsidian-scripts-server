@@ -42,6 +42,10 @@ To build and run the Docker container:
 
 The server will be accessible at `http://localhost:3000`.
 
+When deploying code changes, rebuild the image (`docker compose up -d --build`
+or run `docker build` again). Restarting an existing container reuses the old
+image and will not include the new code.
+
 ## Environment Variables/Secrets
 
 Regardless of npm or docker you'll need to populate these env vars:
@@ -63,9 +67,23 @@ and `secrets.json` are also ignored — do not commit either.
 ### Google Health API credentials
 
 The sleep endpoint uses the Google Health API (the Fitbit Web API was shut
-down in November 2026), which uses Google OAuth 2.0. Copy `client_id` and
-`client_secret` from the downloaded client secret JSON into
-`GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`, then run:
+down in November 2026), which uses Google OAuth 2.0.
+
+One-time Google Cloud setup:
+
+1. Create a Google Cloud project and enable the **Google Health API**.
+2. Create an OAuth client of type **Web application** with the redirect URI
+   `https://www.google.com`, then download its client secret JSON.
+3. On the OAuth consent screen, add the
+   `https://www.googleapis.com/auth/googlehealth.sleep.readonly` scope and
+   publish the app to **Production**. Apps left in **Testing** issue refresh
+   tokens that expire after 7 days. Verification is not required for personal
+   use; the unverified-app warning can be clicked through.
+4. Complete the branding fields using the GitHub Pages URLs described in
+   [OAuth consent branding](#oauth-consent-branding-github-pages).
+
+Then copy `client_id` and `client_secret` from the downloaded client secret
+JSON into `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`, and run:
 
 ```
 npm run google:auth
@@ -93,6 +111,14 @@ npm run google:test -- 2026-11-02
 
 The test prints only diagnostics — token expiry, account link status, and the
 shape of each sleep data point (no tokens or health values).
+
+#### Re-authenticating
+
+`GOOGLE_REFRESH_TOKEN` stays valid as long as it is used at least once every
+six months and access has not been revoked. If it stops working — access was
+revoked, the token went unused, or the OAuth client was recreated — repeat the
+`npm run google:auth` steps above, then update `GOOGLE_REFRESH_TOKEN` in the
+`.env` used by the server.
 
 ## OAuth consent branding (GitHub Pages)
 
