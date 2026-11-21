@@ -2,14 +2,14 @@ FROM node:18
 
 WORKDIR /usr/src/app
 
-# Copy package.json
-COPY package.json ./
-
-# Install dependencies
-RUN npm install
+# Install exact dependency versions from the lockfile
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 
 # Copy the entire src directory
 COPY ./src ./src
+
+ENV NODE_ENV=production
 
 # Expose the application port
 EXPOSE 3000

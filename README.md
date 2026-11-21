@@ -42,9 +42,25 @@ To build and run the Docker container:
 
 The server will be accessible at `http://localhost:3000`.
 
-When deploying code changes, rebuild the image (`docker compose up -d --build`
-or run `docker build` again). Restarting an existing container reuses the old
-image and will not include the new code.
+### Prebuilt images
+
+GitHub Actions (`.github/workflows/docker.yml`) builds the image and publishes
+it to `ghcr.io/rooday/obsidian-scripts-server`:
+
+| Trigger | Tags |
+| --- | --- |
+| Push a `vX.Y.Z` tag | `X.Y.Z`, `X.Y`, `X`, `latest` |
+| Push to `main` | `main`, `sha-<short>` |
+| Pull request | built to check it, not pushed |
+
+To release, bump `version` in `package.json`, then tag and push:
+
+```
+git tag v1.2.3
+git push origin v1.2.3
+```
+
+Deployments should pin an exact version (`:1.2.3`) rather than `latest`.
 
 ## Environment Variables/Secrets
 
@@ -148,8 +164,7 @@ Here's an example docker compose section using Traefik as a reverse-proxy:
 
 ```yaml
 obsidian-script-server:
-  build:
-    context: /home/rooday/obsidian-scripts-server
+  image: ghcr.io/rooday/obsidian-scripts-server:1.0.0
   container_name: obsidian-script-server
   networks:
     - private
